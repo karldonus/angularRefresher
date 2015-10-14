@@ -1,0 +1,10 @@
+img {
+  width: 60%;
+}
+.portrait {
+  text-align: center;
+}
+.portrait > img {
+  margin: 1em auto;
+  border: 2em solid red;
+}

@@ -1,11 +1,57 @@
 <!DOCTYPE html>
-<html ng-app="store">
+<html lang="en" ng-app="government">
   <head>
-    <link rel="stylesheet" type="text/css" href="bootstrap.min.js" />
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
-  <body>
-    hello world
+  <body ng-controller="GovernmentController as government">
+    <ul class="list-group">
+      <h1>Buy a Politican Game</h1>
+      <li class="list-group-item" ng-repeat="campaign in government.campaigns | orderBy: '-funds'  ">
+        <h2>
+          {{campaign.name}}
+          <button class="pull-right" ng-show="campaign.canPurchase"> Throw Fundraiser </button>
+        </h2>
+        <section ng-controller="PanelController as panel">
+          <ul class="nav nav-pills">
+            <li ng-class="{active:panel.isSelected(1)}"> <a href ng-click="panel.selectTab(1)">Description</a></li>
+            <li ng-class="{active:panel.isSelected(2)}"><a href ng-click="panel.selectTab(2)">Funds</a></li>
+            <li ng-class="{active:panel.isSelected(3)}"><a href ng-click="panel.selectTab(3)">Image Gallery</a></li>
+            <li ng-class="{active:panel.isSelected(4)}"><a href ng-click="panel.selectTab(4)">Reviews</a></li>
+
+          </ul>
+          <div class="description" ng-show="panel.isSelected(1)">
+            <h3>Party Affiliation</h3>
+            <p> {{campaign.description | uppercase}} </p>
+          </div>
+          <div class="funds" ng-show="panel.isSelected(2)">
+            <h3>Funds</h3>
+            <p> {{campaign.funds | currency}}M </p>
+          </div>
+          <div class="portrait" ng-repeat="image in campaign.images" ng-show="panel.isSelected(3)">
+            <h3>Images</h3>
+            <img ng-src="{{image}}" alt="{{campaign.name}}'s portrait" />
+          </div>
+          <div class="reviews" ng-show="panel.isSelected(4)">
+            <h3>Reviews</h3>
+            <blockquote ng-repeat="review in campaign.reviews">
+              <b>stars: {{review.stars}}</b>
+              {{review.body}}
+              <cite>by: {{review.author}}</cite>
+            </blockquote>
+          </div>
+        </section>
+
+      </li>
+    </ul>
+
+
+
     <script type="text/javascript" src="angular.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+
   </body>
 </html>
