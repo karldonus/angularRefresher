@@ -13,6 +13,15 @@
       return this.tab === checkTab;
     };
   });
+  app.controller("ReviewController", function(){
+    this.review = {};
+
+    this.addReview = function(campaign) {
+      this.review.createdOn = Date.now();
+      campaign.reviews.push(this.review);
+      this.review = {};
+    };
+  });
 
   var candidates = [
       {
@@ -47,7 +56,8 @@
       images: [
         'images/sandersBernie.jpg',
         'images/sandersBernie2.jpg'
-      ]
+      ],
+      reviews: []
     },
     {
       name: 'Ted Cruz',
@@ -57,7 +67,8 @@
       droppedOut: false,
       images: [
         'images/cruzTed.jpg'
-      ]
+      ],
+      reviews: []
     }
   ];
 
