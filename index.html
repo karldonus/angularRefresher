@@ -9,68 +9,9 @@
     <ul class="list-group">
       <h1>Buy a Politican Game</h1>
       <li class="list-group-item" ng-repeat="campaign in government.campaigns | orderBy: '-funds'  ">
-        <h2>
-          {{campaign.name}}
-          <button class="pull-right" ng-show="campaign.canPurchase"> Throw Fundraiser </button>
-        </h2>
-        <!-- nav bar for each candidate-->
-        <section ng-controller="PanelController as panel">
-          <ul class="nav nav-pills">
-            <li ng-class="{active:panel.isSelected(1)}"> <a href ng-click="panel.selectTab(1)">Description</a></li>
-            <li ng-class="{active:panel.isSelected(2)}"><a href ng-click="panel.selectTab(2)">Funds</a></li>
-            <li ng-class="{active:panel.isSelected(3)}"><a href ng-click="panel.selectTab(3)">Image Gallery</a></li>
-            <li ng-class="{active:panel.isSelected(4)}"><a href ng-click="panel.selectTab(4)">Reviews</a></li>
-          </ul>
-          <!-- description panel -->
-          <div class="description" ng-show="panel.isSelected(1)">
-            <h3>Party Affiliation</h3>
-            <p> {{campaign.description | uppercase}} </p>
-          </div>
-          <!-- funds panel -->
-          <div class="funds" ng-show="panel.isSelected(2)">
-            <h3>Funds</h3>
-            <p> {{campaign.funds | currency}}M </p>
-          </div>
-          <!-- image gallery panel -->
-          <div class="portrait" ng-repeat="image in campaign.images" ng-show="panel.isSelected(3)">
-            <h3>Images</h3>
-            <img ng-src="{{image}}" alt="{{campaign.name}}'s portrait" />
-          </div>
-          <!-- reviews panel -->
-          <div class="reviews" ng-show="panel.isSelected(4)">
-            <h3>Reviews</h3>
-            <blockquote ng-repeat="review in campaign.reviews">
-              <b>stars: {{review.stars}}</b>
-              {{review.body}}
-              <cite>by: {{review.author}} on {{review.createdOn | date:"MM/dd/yyyy 'at' h:mma"}}</cite>
-            </blockquote>
-            <!-- review form -->
-            <form name="reviewForm" ng-controller="ReviewController as reviewCtrl"
-                                    ng-submit="reviewForm.$valid && reviewCtrl.addReview(campaign)" novalidate>
-              <blockquote>
-                <b>stars: {{reviewCtrl.review.stars}}</b>
-                {{reviewCtrl.review.body}}
-                <cite>by: {{reviewCtrl.review.author}}</cite>
-              </blockquote>
-
-              <textarea ng-model="reviewCtrl.review.body" class="form-control animated"
-                placeholder="Enter your review..." required></textarea>
-              <select ng-model="reviewCtrl.review.stars" title="Stars" required>
-                <option value="1">1 star</option>
-                <option value="2">2 stars</option>
-                <option value="3">3 stars</option>
-                <option value="4">4 stars</option>
-                <option value="5">5 stars</option>
-              </select>
-              <label>by:</label>
-              <input ng-model="reviewCtrl.review.author" type="email" placeholder="Email" required/>
-              <div> reviewForm is {{reviewForm.$valid}}</div>
-              <input type="submit" value="I Agree to Terms and Conditions" />
-            </form>
-
-          </div>
-        </section>
-
+        <campaign-title></campaign-title>
+        <!-- panel for each candidate-->
+        <campaign-panels></campaign-panels>
       </li>
     </ul>
 
@@ -78,6 +19,7 @@
 
     <script type="text/javascript" src="angular.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="campaigns.js"></script>
     <script src="jquery.min.js"></script>
     <script src="bootstrap.min.js"></script>
 

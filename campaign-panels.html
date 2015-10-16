@@ -1,0 +1,57 @@
+<section>
+  <ul class="nav nav-pills">
+    <li ng-class="{active:panel.isSelected(1)}"> <a href ng-click="panel.selectTab(1)">Description</a></li>
+    <li ng-class="{active:panel.isSelected(2)}"><a href ng-click="panel.selectTab(2)">Funds</a></li>
+    <li ng-class="{active:panel.isSelected(3)}"><a href ng-click="panel.selectTab(3)">Image Gallery</a></li>
+    <li ng-class="{active:panel.isSelected(4)}"><a href ng-click="panel.selectTab(4)">Reviews</a></li>
+  </ul>
+  <!-- description panel -->
+  <div class="description" ng-show="panel.isSelected(1)">
+    <h3>Party Affiliation</h3>
+    <p> {{campaign.description | uppercase}} </p>
+  </div>
+  <!-- funds panel -->
+  <div class="funds" ng-show="panel.isSelected(2)">
+    <h3>Funds</h3>
+    <p> {{campaign.funds | currency}}M </p>
+  </div>
+  <!-- image gallery panel -->
+  <div class="portrait" ng-repeat="image in campaign.images" ng-show="panel.isSelected(3)">
+    <h3>Images</h3>
+    <img ng-src="{{image}}" alt="{{campaign.name}}'s portrait" />
+  </div>
+  <!-- reviews panel -->
+  <div class="reviews" ng-show="panel.isSelected(4)">
+    <h3>Reviews</h3>
+    <blockquote ng-repeat="review in campaign.reviews">
+      <b>stars: {{review.stars}}</b>
+      {{review.body}}
+      <cite>by: {{review.author}} on {{review.createdOn | date:"MM/dd/yyyy 'at' h:mma"}}</cite>
+    </blockquote>
+    <!-- review form -->
+    <form name="reviewForm" ng-controller="ReviewController as reviewCtrl"
+                            ng-submit="reviewForm.$valid && reviewCtrl.addReview(campaign)" novalidate>
+    <!-- preview box -->
+      <blockquote>
+        <b>stars: {{reviewCtrl.review.stars}}</b>
+        {{reviewCtrl.review.body}}
+        <cite>by: {{reviewCtrl.review.author}}</cite>
+      </blockquote>
+    <!-- actual review form -->
+      <textarea ng-model="reviewCtrl.review.body" class="form-control animated"
+        placeholder="Enter your review..." required></textarea>
+      <select ng-model="reviewCtrl.review.stars" title="Stars" required>
+        <option value="">Please Rank</option>
+        <option value="1">1 star</option>
+        <option value="2">2 stars</option>
+        <option value="3">3 stars</option>
+        <option value="4">4 stars</option>
+        <option value="5">5 stars</option>
+      </select>
+      <label>by:</label>
+      <input ng-model="reviewCtrl.review.author" type="email" placeholder="Email" required/>
+      <input type="submit" value="Post" />
+    </form>
+
+  </div>
+</section>

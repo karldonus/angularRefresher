@@ -1,18 +1,14 @@
 (function(){
-  var app = angular.module('government',[]);
+  var app = angular.module('government',['government-campaigns']);
 
-  app.controller('GovernmentController', function(){
+  app.controller('GovernmentController', ['$http', function($http){
+    var government = this;
+    government.campaign = [];
     this.campaigns = candidates;
-  });
-  app.controller('PanelController', function(){
-    this.tab = 1;
-    this.selectTab = function(setTab) {
-      this.tab = setTab;
-    };
-    this.isSelected = function(checkTab) {
-      return this.tab === checkTab;
-    };
-  });
+    // $http.get('/products.json').success(function(data){
+    //   government.campaigns = data;
+    // });
+  }]);
   app.controller("ReviewController", function(){
     this.review = {};
 
@@ -22,6 +18,7 @@
       this.review = {};
     };
   });
+
 
   var candidates = [
       {
